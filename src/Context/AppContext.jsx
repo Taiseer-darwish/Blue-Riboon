@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { db } from "../firebase";
+import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import {
   collection,
   getDocs,
@@ -41,14 +42,14 @@ export function AppProvider({ children }) {
   const checkSportExists = async (name) => {
     const q = query(collection(db, "sports"), where("name", "==", name));
     const snapshot = await getDocs(q);
-    return !snapshot.empty; // Return true if name exists
+    return !snapshot.empty;
   };
 
   // Check if Member Exists
   const checkMemberExists = async (name) => {
     const q = query(collection(db, "members"), where("name", "==", name));
     const snapshot = await getDocs(q);
-    return !snapshot.empty; // Return true if name exists
+    return !snapshot.empty;
   };
 
   // Load Data on App Start
@@ -82,6 +83,34 @@ export function AppProvider({ children }) {
     setMembers((prev) => [...prev, { id: docRef.id, name, imageURL }]);
   };
 
+  // Delete Sport;
+  const deleteSport = async (id) => {
+    try {
+      await deleteDoc(doc(db, "sports", id));
+      setSports((prev) => prev.filter((sport) => sport.id !== id));
+    } catch (error) {
+      console.error("Error deleting sport:", error);
+      throw error;
+    }
+  };
+
+  // Update Sport
+  const updateSport = async (id, updatedData) => {
+    try {
+      const sportRef = doc(db, "sports", id);
+      await updateDoc(sportRef, updatedData);
+
+      setSports((prev) =>
+        prev.map((sport) =>
+          sport.id === id ? { ...sport, ...updatedData } : sport
+        )
+      );
+    } catch (error) {
+      console.error("Error updating sport:", error);
+      throw error;
+    }
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -92,6 +121,8 @@ export function AppProvider({ children }) {
         addMember,
         checkSportExists,
         checkMemberExists,
+        deleteSport,
+        updateSport,
       }}
     >
       {children}
