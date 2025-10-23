@@ -173,6 +173,7 @@ export function AppProvider({ children }) {
         members,
         addSport,
         addMember,
+        getSubscriptions,
         addSubscription,
         checkSportExists,
         checkMemberExists,

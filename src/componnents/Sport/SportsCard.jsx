@@ -59,7 +59,7 @@ function SportsCard({ id, name, image }) {
 
   return (
     <div
-      className="relative z-10 rounded-md w-[330px] h-[300px] md:w-[270px] md:h-[260px] p-4 overflow-hidden"
+      className="relative z-10 rounded-md w-[330px] h-[300px] md:w-[270px] md:h-[260px] p-4 overflow-hidden "
       style={{ boxShadow: "3px 2px 8px 0px #1b2c91" }}
     >
       <LazyLoadImage

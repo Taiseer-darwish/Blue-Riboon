@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { FaEllipsisV, FaTrash, FaEdit } from "react-icons/fa";
@@ -8,9 +8,32 @@ import { useApp } from "../../Context/AppContext";
 
 function MemberCard({ id, name, image }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const { deleteMember } = useApp();
+  const [memberSports, setMemberSports] = useState([]);
+
+  const { deleteMember, sports, getSubscriptions } = useApp();
   const navigate = useNavigate();
 
+  // ✅ Load member's subscribed sports using getSubscriptions from context
+  useEffect(() => {
+    const fetchMemberSports = async () => {
+      try {
+        const subscriptions = await getSubscriptions();
+        // filter subscriptions for this member
+        const memberSubs = subscriptions.filter((sub) => sub.memberId === id);
+        // match with sports list from context
+        const subscribedSports = sports.filter((sport) =>
+          memberSubs.some((sub) => sub.sportId === sport.id)
+        );
+        setMemberSports(subscribedSports);
+      } catch (error) {
+        console.error("Error fetching subscriptions:", error);
+      }
+    };
+
+    fetchMemberSports();
+  }, [id, sports, getSubscriptions]);
+
+  // ✅ Delete Member
   const handleDelete = useCallback(async () => {
     const result = await Swal.fire({
       title: "Are you sure?",
@@ -49,17 +72,12 @@ function MemberCard({ id, name, image }) {
     }
   }, [id, name, deleteMember]);
 
-  const handleEdit = () => {
-    navigate(`/edit-member/${id}`);
-  };
-
-  const toggleDropdown = () => {
-    setIsDropdownOpen((prev) => !prev);
-  };
+  const handleEdit = () => navigate(`/edit-member/${id}`);
+  const toggleDropdown = () => setIsDropdownOpen((prev) => !prev);
 
   return (
     <div
-      className="relative rounded-md w-[330px] h-[300px] md:w-[270px] md:h-[260px] justify-center flex overflow-hidden"
+      className="relative rounded-md w-[330px] h-[330px] md:w-[270px] md:h-[280px] justify-center flex overflow-hidden"
       style={{ boxShadow: "3px 2px 8px 0px #1b2c91" }}
     >
       <LazyLoadImage
@@ -69,13 +87,33 @@ function MemberCard({ id, name, image }) {
         className="rounded-full w-[150px] h-[150px] mt-7 m-auto object-cover"
         wrapperClassName="inset-0 z-0"
       />
+
       <div className="absolute inset-0 bg-gradient-to-b from-[#12131a]/95 via-[#12131a]/30 to-transparent z-10"></div>
-      <div className="absolute inset-0 flex items-end p-3.5 justify-center z-20">
-        <h3 className="text-[#ffffff] font-semibold text-xl tracking-wide text-center">
+
+      {/* Member Name + Sports */}
+      <div className="absolute inset-0 flex flex-col items-center justify-end pb-3.5 z-20">
+        <h3 className="text-[#ffffff] font-semibold text-xl tracking-wide text-center mb-2">
           {name}
         </h3>
+
+        {/* ✅ Subscribed Sports Badges */}
+        {memberSports.length > 0 ? (
+          <div className="flex flex-wrap justify-center gap-2">
+            {memberSports.map((sport) => (
+              <span
+                key={sport.id}
+                className="text-xs bg-gradient-to-r from-blue-600 to-blue-900 text-white px-2 py-1 rounded-full shadow-md"
+              >
+                {sport.name}
+              </span>
+            ))}
+          </div>
+        ) : (
+          <p className="text-gray-400 text-xs italic">No subscriptions yet</p>
+        )}
       </div>
 
+      {/* Dropdown */}
       <div className="absolute top-2 right-2 z-30">
         <button
           onClick={toggleDropdown}
