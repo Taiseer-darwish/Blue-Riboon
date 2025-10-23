@@ -8,7 +8,13 @@ import { uploadImageToCloudinary } from "../../utils/uploadImage";
 import EntityForm from "./EntityForm";
 import { useApp } from "../../Context/AppContext";
 
-function EditEntity({ entityType, updateEntityFn, navigateTo, title, checkEntityExists }) {
+function EditEntity({
+  entityType,
+  updateEntityFn,
+  navigateTo,
+  title,
+  checkEntityExists,
+}) {
   const { id } = useParams();
   const { sports, members, loading } = useApp();
   const [selectedImage, setSelectedImage] = useState(null);
@@ -19,7 +25,10 @@ function EditEntity({ entityType, updateEntityFn, navigateTo, title, checkEntity
 
   useEffect(() => {
     if (!loading && id) {
-      const entity = entityType === "Sport" ? sports.find((s) => s.id === id) : members.find((m) => m.id === id);
+      const entity =
+        entityType === "Sport"
+          ? sports.find((s) => s.id === id)
+          : members.find((m) => m.id === id);
       if (entity) {
         setInitialName(entity.name);
         setSelectedImage(entity.imageURL);
@@ -60,7 +69,9 @@ function EditEntity({ entityType, updateEntityFn, navigateTo, title, checkEntity
 
     setIsLoading(true);
     try {
-      const imageURL = imageFile ? await uploadImageToCloudinary(imageFile) : selectedImage;
+      const imageURL = imageFile
+        ? await uploadImageToCloudinary(imageFile)
+        : selectedImage;
       if (!imageURL) {
         Swal.fire({
           icon: "error",
@@ -74,7 +85,7 @@ function EditEntity({ entityType, updateEntityFn, navigateTo, title, checkEntity
         return;
       }
 
-      await updateEntityFn(id, data.entityName, imageURL);
+      await updateEntityFn(id, { name: data.entityName, imageURL });
       Swal.fire({
         icon: "success",
         title: "Success",
@@ -129,7 +140,7 @@ function EditEntity({ entityType, updateEntityFn, navigateTo, title, checkEntity
             onSubmit={handleSubmit}
             handleImageChange={handleImageChange}
             isLoading={isLoading}
-            checkEntityExists={checkEntityExists}
+            checkEntityExists={(name) => checkEntityExists(name, id)} 
             initialName={initialName}
             saveButton={true}
           />

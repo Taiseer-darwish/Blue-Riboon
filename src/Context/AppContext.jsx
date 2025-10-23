@@ -38,18 +38,24 @@ export function AppProvider({ children }) {
     setMembers(data);
   };
 
+  // Get Subscriptions
+  const getSubscriptions = async () => {
+    const querySnapshot = await getDocs(collection(db, "subscriptions"));
+    return querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+  };
+
   // Check if Sport Exists
-  const checkSportExists = async (name) => {
+  const checkSportExists = async (name, excludeId = null) => {
     const q = query(collection(db, "sports"), where("name", "==", name));
     const snapshot = await getDocs(q);
-    return !snapshot.empty;
+    return snapshot.docs.some((d) => d.id !== excludeId);
   };
 
   // Check if Member Exists
-  const checkMemberExists = async (name) => {
+  const checkMemberExists = async (name, excludeId = null) => {
     const q = query(collection(db, "members"), where("name", "==", name));
     const snapshot = await getDocs(q);
-    return !snapshot.empty;
+    return snapshot.docs.some((d) => d.id !== excludeId);
   };
 
   // Load Data on App Start
@@ -83,6 +89,26 @@ export function AppProvider({ children }) {
     setMembers((prev) => [...prev, { id: docRef.id, name, imageURL }]);
   };
 
+  // Add Subscription
+  const addSubscription = async (memberId, sportId) => {
+    const q = query(
+      collection(db, "subscriptions"),
+      where("memberId", "==", memberId),
+      where("sportId", "==", sportId)
+    );
+    const querySnapshot = await getDocs(q);
+
+    if (!querySnapshot.empty) {
+      throw new Error("This member is already subscribed to this sport!");
+    }
+
+    await addDoc(collection(db, "subscriptions"), {
+      memberId,
+      sportId,
+      date: new Date().toISOString(),
+    });
+  };
+
   // Delete Sport;
   const deleteSport = async (id) => {
     try {
@@ -90,6 +116,17 @@ export function AppProvider({ children }) {
       setSports((prev) => prev.filter((sport) => sport.id !== id));
     } catch (error) {
       console.error("Error deleting sport:", error);
+      throw error;
+    }
+  };
+
+  // Delete Member
+  const deleteMember = async (id) => {
+    try {
+      await deleteDoc(doc(db, "members", id));
+      setMembers((prev) => prev.filter((member) => member.id !== id));
+    } catch (error) {
+      console.error("Error deleting member:", error);
       throw error;
     }
   };
@@ -111,6 +148,23 @@ export function AppProvider({ children }) {
     }
   };
 
+  // Update Member
+  const updateMember = async (id, updatedData) => {
+    try {
+      const memberRef = doc(db, "members", id);
+      await updateDoc(memberRef, updatedData);
+
+      setMembers((prev) =>
+        prev.map((member) =>
+          member.id === id ? { ...member, ...updatedData } : member
+        )
+      );
+    } catch (error) {
+      console.error("Error updating member:", error);
+      throw error;
+    }
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -119,10 +173,13 @@ export function AppProvider({ children }) {
         members,
         addSport,
         addMember,
+        addSubscription,
         checkSportExists,
         checkMemberExists,
         deleteSport,
         updateSport,
+        updateMember,
+        deleteMember,
       }}
     >
       {children}

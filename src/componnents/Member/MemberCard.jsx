@@ -1,14 +1,14 @@
 import React, { useState, useCallback } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
-import { FaEllipsisV, FaTrash,} from "react-icons/fa";
+import { FaEllipsisV, FaTrash, FaEdit } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import { useApp } from "../Context/AppContext";
+import { useApp } from "../../Context/AppContext";
 
-function SportsCard({ id, name, image }) {
+function MemberCard({ id, name, image }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const { deleteSport } = useApp();
+  const { deleteMember } = useApp();
   const navigate = useNavigate();
 
   const handleDelete = useCallback(async () => {
@@ -26,7 +26,7 @@ function SportsCard({ id, name, image }) {
 
     if (result.isConfirmed) {
       try {
-        await deleteSport(id);
+        await deleteMember(id);
         Swal.fire({
           icon: "success",
           title: "Deleted!",
@@ -39,7 +39,7 @@ function SportsCard({ id, name, image }) {
         Swal.fire({
           icon: "error",
           title: "Error",
-          text: "Failed to delete the sport!",
+          text: "Failed to delete the member!",
           background: "#12131a",
           color: "#ffffff",
           confirmButtonColor: "#ff0000",
@@ -47,30 +47,35 @@ function SportsCard({ id, name, image }) {
         console.error(error);
       }
     }
-  }, [id, name, deleteSport]);
+  }, [id, name, deleteMember]);
 
-  const toggleDropdown = useCallback(() => {
+  const handleEdit = () => {
+    navigate(`/edit-member/${id}`);
+  };
+
+  const toggleDropdown = () => {
     setIsDropdownOpen((prev) => !prev);
-  }, []);
+  };
 
   return (
     <div
-      className="relative rounded-md w-[350px] h-[250px] p-4 overflow-hidden"
+      className="relative rounded-md w-[300px] h-[260px] justify-center flex overflow-hidden"
       style={{ boxShadow: "3px 2px 8px 0px #ffe8c952" }}
     >
       <LazyLoadImage
         src={image}
         alt={name}
         effect="blur"
-        className="rounded-md w-full h-full object-cover"
-        wrapperClassName="absolute inset-0 z-0"
+        className="rounded-full w-[150px] h-[150px] mt-7 m-auto object-cover"
+        wrapperClassName="inset-0 z-0"
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-[#12131a]/5 via-[#12131a]/90 to-transparent z-10"></div>
-      <div className="absolute inset-0 flex items-center justify-center z-20">
-        <h3 className="text-[#ffffff] font-bold text-5xl tracking-wide text-center">
+      <div className="absolute inset-0 bg-gradient-to-b from-[#12131a]/95 via-[#12131a]/30 to-transparent z-10"></div>
+      <div className="absolute inset-0 flex items-end p-3.5 justify-center z-20">
+        <h3 className="text-[#ffffff] font-semibold text-xl tracking-wide text-center">
           {name}
         </h3>
       </div>
+
       <div className="absolute top-2 right-2 z-30">
         <button
           onClick={toggleDropdown}
@@ -78,8 +83,16 @@ function SportsCard({ id, name, image }) {
         >
           <FaEllipsisV size={20} />
         </button>
+
         {isDropdownOpen && (
           <div className="absolute right-0 mt-2 w-32 bg-[#12131a] rounded-md shadow-[0_0_5px_#ff0000] z-40">
+            <button
+              onClick={handleEdit}
+              className="flex items-center w-full px-4 py-2 text-white hover:bg-[#ff0000]/20 transition-colors"
+            >
+              <FaEdit className="mr-2" />
+              Edit
+            </button>
             <button
               onClick={handleDelete}
               className="flex items-center w-full px-4 py-2 text-white hover:bg-[#ff0000]/20 transition-colors"
@@ -94,4 +107,4 @@ function SportsCard({ id, name, image }) {
   );
 }
 
-export default SportsCard;
+export default MemberCard;

@@ -1,6 +1,6 @@
 import React from "react";
-import { useApp } from "../Context/AppContext";
-import EditEntity from "../componnents/Forms/EditEntity";
+import { useApp } from "../../Context/AppContext";
+import EditEntity from "../Forms/EditEntity";
 
 function EditMember() {
   const { updateMember, checkMemberExists } = useApp();

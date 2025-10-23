@@ -1,6 +1,6 @@
 import React from "react";
 import { useApp } from "../../Context/AppContext";
-import AddEntity from "./AddEntity";
+import AddEntity from "../Forms/AddEntity";
 
 function AddMember() {
   const { addMember, checkMemberExists } = useApp();

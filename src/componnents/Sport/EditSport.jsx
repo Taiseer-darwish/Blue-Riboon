@@ -1,6 +1,6 @@
 import React from "react";
-import { useApp } from "../Context/AppContext";
-import EditEntity from "../componnents/Forms/EditEntity";
+import { useApp } from "../../Context/AppContext";
+import EditEntity from "../../componnents/Forms/EditEntity";
 
 function EditSport() {
   const { updateSport, checkSportExists } = useApp();

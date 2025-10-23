@@ -1,6 +1,6 @@
 import React from "react";
 import FAB from "../componnents/FAB";
-import MemberCard from "../componnents/MemberCard";
+import MemberCard from "../componnents/Member/MemberCard";
 import { useApp } from "../Context/AppContext";
 
 function Members() {
@@ -11,7 +11,11 @@ function Members() {
     <main className=" w-full min-h-screen m-auto flex justify-center items-center bg-[#12131a] p-20">
       <div className=" grid grid-cols-3 gap-7">
         {members.map((member) => (
-          <MemberCard key={member.id} name={member.name} image={member.imageURL} />
+          <MemberCard
+            id={member.id}
+            name={member.name}
+            image={member.imageURL}
+          />
         ))}
         <FAB to="/AddMember" />
       </div>

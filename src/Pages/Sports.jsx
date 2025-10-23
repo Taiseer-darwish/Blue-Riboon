@@ -1,6 +1,6 @@
 import React from "react";
 import { useApp } from "../Context/AppContext";
-import SportsCard from "../componnents/SportsCard";
+import SportsCard from "../componnents/Sport/SportsCard";
 import FAB from "../componnents/FAB";
 
 function Sports() {
