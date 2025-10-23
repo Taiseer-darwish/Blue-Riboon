@@ -46,19 +46,21 @@ function Subscriptions() {
       </h2>
       <form
         onSubmit={handleSubmit}
-        className="max-w-2xl mx-auto bg-[#1e1f27] p-8 rounded-2xl shadow-[0_0_10px_#ff0000]"
+        className="max-w-2xl mx-auto bg-[#1e1f27] p-8 rounded-2xl shadow-[0_0_10px_#1b2c91]"
       >
         <label className="block mb-4 text-lg font-semibold">
           Select Member
         </label>
         <select
-          className="w-full p-3 rounded-lg bg-transparent border border-[#ff0000] text-white mb-6"
+          className="w-full p-3 rounded-lg bg-transparent border border-[#1b2c91] text-white mb-6"
           value={selectedMember}
           onChange={(e) => setSelectedMember(e.target.value)}
         >
-          <option value="">-- Choose Member --</option>
+          <option value="" className="bg-[#0a0b10] text-gray-300">Choose Member </option>
           {members.map((m) => (
-            <option key={m.id} value={m.id}>
+            <option key={m.id} value={m.id}
+                          className="bg-[#0a0b10] text-gray-200"
+>
               {m.name}
             </option>
           ))}
@@ -73,7 +75,7 @@ function Subscriptions() {
               key={s.id}
               className={`flex items-center gap-2 p-2 rounded-lg border cursor-pointer ${
                 selectedSports.includes(s.id)
-                  ? "border-[#ff0000] bg-[#3b0f0f4f]"
+                  ? "border-[#1b2c91] bg-[#3b0f0f4f]"
                   : "border-gray-600"
               }`}
             >
@@ -89,7 +91,7 @@ function Subscriptions() {
 
         <button
           type="submit"
-          className="w-full py-3 rounded-xl bg-gradient-to-r from-[#520202] to-[#ff0000] font-bold shadow-[0_0_5px_#fff] hover:shadow-[0_0_15px_#ff0000] transition"
+          className="w-full py-3 rounded-xl bg-gradient-to-r from-[#200101] to-[#0a165b] font-bold shadow-[0_0_5px_#fff] hover:shadow-[0_0_15px_#1b2c91] transition"
         >
           Subscribe
         </button>

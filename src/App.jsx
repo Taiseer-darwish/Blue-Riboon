@@ -7,15 +7,12 @@ import Addsport from "./componnents/Sport/Addsport";
 import AddMemper from "./componnents/Member/AddMember";
 import EditSport from "./componnents/Sport/EditSport";
 import EditMember from "./componnents/Member/EditMember";
+import Nav from "./componnents/Nav";
 
 export default function App() {
   return (
     <BrowserRouter>
-      <nav className=" fixed  text-amber-100 px-17 py-3 flex justify-center items-center gap-7 w-full ">
-        <Link to="/sports">Sports</Link>
-        <Link to="/members">Members</Link>
-        <Link to="/subscriptions">Subscriptions</Link>
-      </nav>
+    < Nav/>
       <Routes>
         <Route path="/sports" element={<Sports />} />
         <Route path="/members" element={<Members />} />

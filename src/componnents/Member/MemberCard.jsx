@@ -59,8 +59,8 @@ function MemberCard({ id, name, image }) {
 
   return (
     <div
-      className="relative rounded-md w-[300px] h-[260px] justify-center flex overflow-hidden"
-      style={{ boxShadow: "3px 2px 8px 0px #ffe8c952" }}
+      className="relative rounded-md w-[330px] h-[300px] md:w-[270px] md:h-[260px] justify-center flex overflow-hidden"
+      style={{ boxShadow: "3px 2px 8px 0px #1b2c91" }}
     >
       <LazyLoadImage
         src={image}
@@ -79,23 +79,23 @@ function MemberCard({ id, name, image }) {
       <div className="absolute top-2 right-2 z-30">
         <button
           onClick={toggleDropdown}
-          className="text-white hover:text-[#ff0000] transition-colors"
+          className="text-white hover:text-[#1f47b7] transition-colors"
         >
           <FaEllipsisV size={20} />
         </button>
 
         {isDropdownOpen && (
-          <div className="absolute right-0 mt-2 w-32 bg-[#12131a] rounded-md shadow-[0_0_5px_#ff0000] z-40">
+          <div className="absolute right-0 mt-2 w-32 bg-[#12131a] rounded-md shadow-[0_0_5px_#293993] z-40">
             <button
               onClick={handleEdit}
-              className="flex items-center w-full px-4 py-2 text-white hover:bg-[#ff0000]/20 transition-colors"
+              className="flex items-center w-full px-4 py-2 text-white hover:bg-[#0000]/20 transition-colors"
             >
               <FaEdit className="mr-2" />
               Edit
             </button>
             <button
               onClick={handleDelete}
-              className="flex items-center w-full px-4 py-2 text-white hover:bg-[#ff0000]/20 transition-colors"
+              className="flex items-center w-full px-4 py-2 text-white hover:bg-[#0000]/20 transition-colors"
             >
               <FaTrash className="mr-2" />
               Delete

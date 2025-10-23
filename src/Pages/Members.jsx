@@ -8,8 +8,8 @@ function Members() {
   if (loading) return <p className="text-white p-20">Loading...</p>;
 
   return (
-    <main className=" w-full min-h-screen m-auto flex justify-center items-center bg-[#12131a] p-20">
-      <div className=" grid grid-cols-3 gap-7">
+    <main className=" w-full min-h-screen m-auto flex justify-center items-center bg-[#12131a] p-10">
+      <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-7">
         {members.map((member) => (
           <MemberCard
             id={member.id}

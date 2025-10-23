@@ -9,8 +9,9 @@ function Sports() {
   if (loading) return <p className="text-white p-20">Loading...</p>;
 
   return (
-    <main className="w-full min-h-screen bg-[#12131a] p-20">
-      <div className="grid grid-cols-3 gap-7 relative">
+    <main
+     className="w-full min-h-screen m-auto flex justify-center items-center bg-[#12131a] p-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 m-auto relative gap-5">
         {sports.map((sport) => (
           <SportsCard
             key={sport.id}

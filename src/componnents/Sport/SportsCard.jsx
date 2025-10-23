@@ -59,8 +59,8 @@ function SportsCard({ id, name, image }) {
 
   return (
     <div
-      className="relative rounded-md w-[350px] h-[250px] p-4 overflow-hidden"
-      style={{ boxShadow: "3px 2px 8px 0px #ffe8c952" }}
+      className="relative z-10 rounded-md w-[330px] h-[300px] md:w-[270px] md:h-[260px] p-4 overflow-hidden"
+      style={{ boxShadow: "3px 2px 8px 0px #1b2c91" }}
     >
       <LazyLoadImage
         src={image}
@@ -75,20 +75,20 @@ function SportsCard({ id, name, image }) {
           {name}
         </h3>
       </div>
-      <div className="absolute top-2 right-2 z-30">
+      <div className="absolute top-2 right-2 z-30 cursor-pointer">
         <button
           onClick={toggleDropdown}
-          className="text-white hover:text-[#ff0000] transition-colors"
+          className="text-white hover:text-[#1b2c91] transition-colors"
         >
           <FaEllipsisV size={20} />
         </button>
         {isDropdownOpen && (
-          <div className="absolute right-0 mt-2 w-32 bg-[#12131a] rounded-md shadow-[0_0_5px_#ff0000] z-40">
+          <div className="absolute right-0 mt-2 w-32 cursor-pointer bg-[#12131a] rounded-md shadow-[0_0_8px_#293993] z-40">
             <button
               onClick={handleDelete}
-              className="flex items-center w-full px-4 py-2 text-white hover:bg-[#ff0000]/20 transition-colors"
+              className="flex items-center  cursor-pointer w-full px-4 py-2 text-white hover:bg-[#000000]/20 transition-colors"
             >
-              <FaTrash className="mr-2" />
+              <FaTrash className="mr-2 text-red-800 " />
               Delete
             </button>
             <button
@@ -96,9 +96,9 @@ function SportsCard({ id, name, image }) {
                 setIsDropdownOpen(false);
                 handleEdit();
               }}
-              className="flex items-center w-full px-4 py-2 text-white hover:bg-[#ff0000]/20 transition-colors"
+              className="flex items-center w-full cursor-pointer px-4 py-2 text-white hover:bg-[#000000]/20 transition-colors"
             >
-              <FaEdit className="mr-2" />
+              <FaEdit className="mr-2 text-blue-400" />
               Edit
             </button>
           </div>

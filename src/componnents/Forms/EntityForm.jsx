@@ -62,7 +62,7 @@ function EntityForm({
   };
 
   return (
-    <form className="w-1/2 flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
+    <form className="w-full md:w-1/2 flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
       <div>
         <label htmlFor={`${entityType}Name`} className="text-white text-lg mb-2 block">
           {entityType} Name
@@ -72,11 +72,11 @@ function EntityForm({
           type="text"
           placeholder={`Enter ${entityType.toLowerCase()} name`}
           {...register("entityName")}
-          className={`bg-transparent rounded-2xl p-3 w-full shadow-[0_0_5px_#ff0000] text-white placeholder-gray-400 ${
-            errors.entityName ? "border-2 border-red-500" : ""
+          className={`bg-transparent rounded-2xl p-3 w-full shadow-[0_0_5px_#1b2c91] text-white placeholder-gray-400 ${
+            errors.entityName ? "border-2 border-blue-500" : ""
           }`}
         />
-        {errors.entityName && <p className="text-red-500 text-sm mt-1">{errors.entityName.message}</p>}
+        {errors.entityName && <p className="text-blue-500 text-sm mt-1">{errors.entityName.message}</p>}
       </div>
 
       <div>
@@ -89,17 +89,17 @@ function EntityForm({
           type="file"
           accept="image/*"
           onChange={onImageChange}
-          className={`bg-transparent rounded-2xl p-3 w-full shadow-[0_0_5px_#ff0000] text-white ${
-            errors.entityImage ? "border-2 border-red-500" : ""
+          className={`bg-transparent rounded-2xl p-3 w-full shadow-[0_0_5px_#1b2c91] text-white ${
+            errors.entityImage ? "border-2 border-blue-500" : ""
           }`}
         />
-        {errors.entityImage && <p className="text-red-500 text-sm mt-1">{errors.entityImage.message}</p>}
+        {errors.entityImage && <p className="text-blue-500 text-sm mt-1">{errors.entityImage.message}</p>}
       </div>
 
       <button
         type="submit"
         disabled={isLoading}
-        className="bg-gradient-to-r from-[#1a1212] to-[#520202d4] text-white font-bold py-2 px-6 rounded-xl shadow-[0_0_5px_#fff] cursor-pointer hover:shadow-[0_0_10px_#ff0000] transition-all duration-300 mt-4 relative"
+        className="bg-gradient-to-r from-[#200101] to-[#0a165b] text-white font-bold py-2 px-6 rounded-xl shadow-[0_0_5px_#fff] cursor-pointer hover:shadow-[0_0_10px_#ff0000] transition-all duration-300 mt-4 relative"
       >
         {isLoading ? (
           <div className="flex items-center justify-center">

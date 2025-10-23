@@ -70,9 +70,9 @@ function AddEntity({
   };
 
   return (
-    <div className="bg-[#12131a] m-auto min-h-screen p-5 flex flex-col justify-center items-center gap-9">
+    <div className="bg-[#12131a] m-auto min-h-screen p-0 md:p-5 flex flex-col justify-center items-center gap-9">
       <div
-        className="w-[80%] m-auto mt-20 p-7 rounded-2xl relative"
+        className="w-[90%] md:w-[80%] m-auto mt-20 p-7 rounded-2xl relative"
         style={{ boxShadow: "3px 2px 8px 0px #ffe8c952" }}
       >
         <Link
@@ -85,7 +85,7 @@ function AddEntity({
         <h2 className="text-5xl text-center font-black mb-7 text-white">
           {title}
         </h2>
-        <div className="flex justify-center items-center gap-7">
+        <div className="flex flex-col md:flex-row justify-center items-center gap-7">
           <EntityForm
             entityType={entityType}
             onSubmit={handleSubmit}
@@ -94,7 +94,7 @@ function AddEntity({
             checkEntityExists={checkEntityExists}
           />
           <div
-            className="relative rounded-md w-[350px] h-[250px] p-4 overflow-hidden"
+            className="relative rounded-md w-[300px] h-[250px] p-4 overflow-hidden"
             style={{ boxShadow: "3px 2px 8px 0px #ffe8c952" }}
           >
             {selectedImage && (
