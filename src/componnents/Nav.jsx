@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import { FiHome, FiUsers, FiCalendar, FiMenu, FiX } from "react-icons/fi";
 
 const navLinks = [
-  { to: "/sports", icon: <FiHome className="text-lg" />, label: "Sports" },
+  { to: "/", icon: <FiHome className="text-lg" />, label: "Sports" },
   { to: "/members", icon: <FiUsers className="text-lg" />, label: "Members" },
   {
     to: "/subscriptions",

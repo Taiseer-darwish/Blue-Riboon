@@ -14,7 +14,7 @@ export default function App() {
     <BrowserRouter>
     < Nav/>
       <Routes>
-        <Route path="/sports" element={<Sports />} />
+        <Route path="/" element={<Sports />} />
         <Route path="/members" element={<Members />} />
         <Route path="/subscriptions" element={<Subscriptions />} />
         <Route path="/Addsport" element={<Addsport />} />

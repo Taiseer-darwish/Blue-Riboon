@@ -9,7 +9,7 @@ function AddSport() {
     <AddEntity
       entityType="Sport"
       addEntityFn={addSport}
-      navigateTo="/sports"
+      navigateTo="/"
       title="Add Sport"
       checkEntityExists={checkSportExists}
     />
