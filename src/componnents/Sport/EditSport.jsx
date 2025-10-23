@@ -9,7 +9,7 @@ function EditSport() {
     <EditEntity
       entityType="Sport"
       updateEntityFn={updateSport}
-      navigateTo="/sports"
+      navigateTo="/"
       title="Edit Sport"
       checkEntityExists={checkSportExists}
     />

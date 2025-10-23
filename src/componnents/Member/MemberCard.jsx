@@ -13,14 +13,11 @@ function MemberCard({ id, name, image }) {
   const { deleteMember, sports, getSubscriptions } = useApp();
   const navigate = useNavigate();
 
-  // ✅ Load member's subscribed sports using getSubscriptions from context
   useEffect(() => {
     const fetchMemberSports = async () => {
       try {
         const subscriptions = await getSubscriptions();
-        // filter subscriptions for this member
         const memberSubs = subscriptions.filter((sub) => sub.memberId === id);
-        // match with sports list from context
         const subscribedSports = sports.filter((sport) =>
           memberSubs.some((sub) => sub.sportId === sport.id)
         );
@@ -33,7 +30,6 @@ function MemberCard({ id, name, image }) {
     fetchMemberSports();
   }, [id, sports, getSubscriptions]);
 
-  // ✅ Delete Member
   const handleDelete = useCallback(async () => {
     const result = await Swal.fire({
       title: "Are you sure?",
@@ -88,15 +84,11 @@ function MemberCard({ id, name, image }) {
         wrapperClassName="inset-0 z-0"
       />
 
-      <div className="absolute inset-0 bg-gradient-to-b from-[#12131a]/95 via-[#12131a]/30 to-transparent z-10"></div>
-
-      {/* Member Name + Sports */}
       <div className="absolute inset-0 flex flex-col items-center justify-end pb-3.5 z-20">
         <h3 className="text-[#ffffff] font-semibold text-xl tracking-wide text-center mb-2">
           {name}
         </h3>
 
-        {/* ✅ Subscribed Sports Badges */}
         {memberSports.length > 0 ? (
           <div className="flex flex-wrap justify-center gap-2">
             {memberSports.map((sport) => (
